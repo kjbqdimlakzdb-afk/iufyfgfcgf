@@ -1,0 +1,439 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Parlons vaccination</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Sora:wght@600;700;800&display=swap">
+<style>
+/* Concept : un diaporama plein écran pour une séance avec des parents. Fond clair et calme, grands textes, couleurs marine, turquoise et corail. */
+:root{
+  --bg:#f3f8fb; --bg2:#e3f0f6; --surface:#ffffff; --surface2:#e8f3f7; --ink:#0c2340; --mute:#566b82; --line:#d2e0ea;
+  --teal:#0a8aa0; --teal-ink:#066779; --coral:#d9503a; --ok:#238a55; --warn:#b97700; --on-accent:#ffffff;
+  --f-d:'Sora','Segoe UI',system-ui,sans-serif; --f-b:'Nunito Sans','Segoe UI',system-ui,sans-serif;
+  --gut:max(16px,env(safe-area-inset-left,0px)); --gutr:max(16px,env(safe-area-inset-right,0px));
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#07142a; --bg2:#0d2142; --surface:#0f2140; --surface2:#142a50; --ink:#e8f1fb; --mute:#9db2cb; --line:#243e66;
+  --teal:#38cde2; --teal-ink:#8aeaf6; --coral:#ff8a76; --ok:#62d697; --warn:#f2c14e; --on-accent:#04122a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#07142a; --bg2:#0d2142; --surface:#0f2140; --surface2:#142a50; --ink:#e8f1fb; --mute:#9db2cb; --line:#243e66;
+  --teal:#38cde2; --teal-ink:#8aeaf6; --coral:#ff8a76; --ok:#62d697; --warn:#f2c14e; --on-accent:#04122a; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-b);font-size:clamp(18px,1.6vw,24px);line-height:1.45;overflow:hidden}
+.deck{position:relative;height:100%;overflow:hidden;background:radial-gradient(110% 80% at 85% 0%,var(--bg2),var(--bg) 62%)}
+.progress{position:absolute;left:0;top:0;height:4px;width:0;background:linear-gradient(90deg,var(--teal),var(--coral));z-index:30;transition:width .4s}
+.slide{position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .35s,visibility .35s;overflow-y:auto;overflow-x:hidden}
+.slide.active{opacity:1;visibility:visible;pointer-events:auto}
+.inner{min-height:100%;display:flex;flex-direction:column;padding-block:clamp(22px,5vh,56px) clamp(90px,14vh,112px);padding-left:var(--gut);padding-right:var(--gutr);max-width:1400px;margin-inline:auto}
+.wrap{margin-block:auto;min-width:0}
+h1,h2,h3{font-family:var(--f-d);line-height:1.1;margin:0;text-wrap:balance}
+h1{font-size:clamp(2.6rem,7.4vw,6rem);font-weight:800;letter-spacing:-.02em}
+h2{font-size:clamp(2rem,4.6vw,3.7rem);font-weight:800;margin-bottom:.45em;letter-spacing:-.01em}
+h3{font-size:1.2em;font-weight:700;margin-bottom:.3em}
+p{margin:0 0 .7em;max-width:44em}
+.eyebrow{font-family:var(--f-d);font-weight:700;letter-spacing:.16em;text-transform:uppercase;font-size:.7em;color:var(--teal-ink);margin:0 0 .8em}
+.lead{font-size:clamp(1.2rem,2.3vw,1.8rem);max-width:30em}
+.mute{color:var(--mute)}
+.small{font-size:.74em;color:var(--mute)}
+:focus-visible{outline:3px solid var(--coral);outline-offset:3px;border-radius:6px}
+
+.grid{display:grid;gap:clamp(12px,1.6vw,22px);grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.card{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;padding:clamp(14px,1.8vw,26px);min-width:0}
+.card.t{border-color:var(--teal)} .card.c{border-color:var(--coral)}
+button.card{font:inherit;color:inherit;text-align:left;cursor:pointer;transition:transform .2s,border-color .2s}
+button.card:hover{transform:translateY(-3px);border-color:var(--teal)}
+.num{font-family:var(--f-d);font-weight:800;color:var(--teal-ink);font-size:.9em}
+.big{font-family:var(--f-d);font-weight:800;font-size:clamp(2.4rem,5.6vw,4.6rem);line-height:1;color:var(--coral);display:block;margin-bottom:.15em}
+
+.btn{font:700 .85em var(--f-d);color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:.6em 1.1em;cursor:pointer;transition:border-color .15s,background .15s}
+.btn:hover{border-color:var(--teal)}
+.btn.pri{background:var(--teal);border-color:var(--teal);color:var(--on-accent)}
+.btn[aria-pressed="true"]{background:var(--surface2);border-color:var(--teal)}
+.ctrl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:14px}
+.read{font-family:var(--f-d);font-weight:700;color:var(--teal-ink)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.8em;color:var(--mute);margin-top:10px}
+.legend i{display:inline-block;width:.85em;height:.85em;border-radius:50%;margin-right:.4em;vertical-align:-1px}
+
+.hero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:clamp(18px,4vw,56px);align-items:center}
+.hero svg{width:100%;max-width:380px;justify-self:center}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.hero svg{max-width:200px;order:-1}}
+
+/* plan */
+.plan{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.step{display:grid;grid-template-columns:4.4rem minmax(0,1fr);gap:4px 16px;align-items:center;width:100%;padding:14px 18px}
+.step .t{font-family:var(--f-d);font-weight:800;color:var(--teal-ink)}
+.step b{display:block}
+.step small{color:var(--mute);font-size:.8em}
+
+/* vote */
+.vrow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px 12px;align-items:center;margin-bottom:14px}
+.vrow .lab{font-weight:700;font-size:1.1em}
+.track{grid-column:1/-1;height:16px;border-radius:99px;background:var(--surface2);overflow:hidden}
+.track i{display:block;height:100%;width:0;background:var(--teal);border-radius:99px;transition:width .5s}
+.vrow:nth-of-type(2) .track i{background:var(--warn)}.vrow:nth-of-type(3) .track i{background:var(--coral)}
+
+.stage{background:var(--surface);border:1.5px solid var(--line);border-radius:16px;overflow:hidden}
+.stage canvas{display:block;width:100%;height:clamp(220px,38vh,380px);background:var(--surface)}
+
+/* quiz */
+.q-count{font-family:var(--f-d);font-weight:700;color:var(--teal-ink);font-size:.9em}
+.q-text{font-family:var(--f-d);font-weight:700;font-size:clamp(1.3rem,3vw,2.2rem);line-height:1.22;margin:.4em 0 1em;min-height:3.4em}
+.q-btns{display:flex;gap:14px;flex-wrap:wrap}
+.q-btns .btn{font-size:1.2em;padding:.8em 2em;min-width:8em}
+.q-btns .btn.right{background:var(--ok);border-color:var(--ok);color:var(--on-accent)}
+.q-btns .btn.wrong{background:var(--coral);border-color:var(--coral);color:var(--on-accent)}
+.q-ex{margin-top:1em;padding:14px 18px;border-radius:12px;background:var(--surface2);border-left:6px solid var(--teal);font-size:.95em}
+.dots{display:flex;gap:6px;margin-top:1.2em}
+.dots i{width:13px;height:13px;border-radius:50%;background:var(--line)}
+.dots i.ok{background:var(--ok)}.dots i.ko{background:var(--coral)}.dots i.cur{outline:2px solid var(--teal);outline-offset:2px}
+
+/* bouclier */
+.people{display:grid;grid-template-columns:repeat(24,1fr);gap:3px;padding:clamp(10px,1.4vw,18px)}
+.p{aspect-ratio:1;border-radius:50%;background:var(--warn);transition:background .3s,transform .3s}
+.p.vac{background:var(--teal)}.p.inf{background:var(--coral);transform:scale(1.18)}
+input[type=range]{accent-color:var(--teal);width:min(100%,420px);height:32px}
+
+/* carnet */
+.form{display:flex;flex-wrap:wrap;gap:12px;align-items:end;margin-bottom:14px}
+.form label{display:grid;gap:4px;font-weight:700;font-size:.85em}
+input[type=number],input[type=text],select{font:inherit;color:var(--ink);background:var(--surface);border:1.5px solid var(--line);border-radius:10px;padding:.5em .8em;min-width:0}
+input[type=number]{width:6em}
+.ms{list-style:none;margin:0;padding:0;display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.ms li{padding:12px 14px;border-radius:12px;background:var(--surface);border:1.5px solid var(--line);display:grid;gap:4px}
+.ms .age{font-family:var(--f-d);font-weight:800;color:var(--teal-ink)}
+.ms .vacs{display:flex;flex-wrap:wrap;gap:6px}
+.vtag{padding:.15em .65em;border-radius:8px;background:var(--surface2);font-weight:700;font-size:.85em}
+.ms .st{font-size:.76em;font-weight:700}
+.ms li.past{border-color:color-mix(in srgb,var(--ok) 60%,var(--line))}.ms li.past .st{color:var(--ok)}
+.ms li.next{border-color:var(--coral);box-shadow:0 0 0 3px color-mix(in srgb,var(--coral) 22%,transparent)}.ms li.next .st{color:var(--coral)}
+.ms li.fut .st{color:var(--mute)}
+.gloss{display:grid;gap:4px 18px;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));font-size:.78em;margin:14px 0 0;padding:0;list-style:none;color:var(--mute)}
+.gloss b{color:var(--ink)}
+
+.alert{border-left:7px solid var(--coral);background:var(--surface);border-radius:12px;padding:14px 20px;margin-top:16px;max-width:60em}
+.msgs{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));counter-reset:m;list-style:none;margin:0;padding:0}
+.msgs li{counter-increment:m;position:relative;padding:16px 16px 16px 64px;background:var(--surface);border:1.5px solid var(--line);border-radius:14px;font-weight:600}
+.msgs li::before{content:counter(m);position:absolute;left:14px;top:12px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--teal);color:var(--on-accent);font-family:var(--f-d);font-weight:800}
+
+/* navigation */
+.nav{position:absolute;left:0;right:0;bottom:0;z-index:40;display:flex;align-items:center;gap:10px;padding:10px var(--gutr) calc(10px + env(safe-area-inset-bottom,0px)) var(--gut);background:linear-gradient(0deg,var(--bg) 55%,transparent)}
+.nav .name{flex:1;text-align:center;font-size:.75em;color:var(--mute);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.nav .count{font-family:var(--f-d);font-weight:700;color:var(--mute);font-variant-numeric:tabular-nums;font-size:.85em}
+.nav .count b{color:var(--ink)}
+.arrow{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--line);background:var(--surface);color:var(--ink);font-size:1.2rem;cursor:pointer}
+.arrow:hover,.arrow:focus-visible{border-color:var(--teal);color:var(--teal-ink)}
+.arrow:disabled{opacity:.35;cursor:default}
+.slide.active .rise{animation:rise .6s cubic-bezier(.2,.8,.2,1) both;animation-delay:calc(var(--i,0)*80ms + 40ms)}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+@media (max-width:640px){.nav .name{display:none}.nav .count{margin-left:auto}}
+@media (prefers-reduced-motion:reduce){.slide.active .rise{animation:none}.slide,.progress,.track i,.p{transition:none}}
+</style>
+
+<div class="deck" id="deck" aria-roledescription="diaporama">
+<div class="progress" id="prog"></div>
+
+<!-- 1 -->
+<section class="slide" data-name="Titre">
+<div class="inner"><div class="wrap hero">
+  <div>
+    <p class="eyebrow rise" style="--i:0">Éducation à la santé · Parents · 30 minutes</p>
+    <h1 class="rise" style="--i:1">Parlons vaccination</h1>
+    <p class="lead rise" style="--i:2;margin-top:.8em">Comprendre comment les vaccins protègent nos enfants, démêler le vrai du faux et vérifier le carnet de vaccination.</p>
+    <p class="rise" style="--i:3"><b>Mouad El Khatyb</b><br><span class="mute">Infirmier · santé de famille et santé communautaire</span></p>
+  </div>
+  <svg viewBox="0 0 200 230" class="rise" style="--i:2" role="img" aria-label="Bouclier avec un enfant protégé">
+    <path d="M100 8 L180 38 V112 C180 168 146 208 100 224 C54 208 20 168 20 112 V38 Z" fill="var(--surface2)" stroke="var(--teal)" stroke-width="6"/>
+    <circle cx="100" cy="86" r="22" fill="var(--coral)"/><path d="M60 160 C60 126 140 126 140 160 V168 H60 Z" fill="var(--teal)"/>
+    <path d="M84 130 L97 143 L120 116" fill="none" stroke="var(--on-accent)" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</div></div>
+</section>
+
+<!-- 2 -->
+<section class="slide" data-name="Objectif de la séance">
+<div class="inner"><div class="wrap">
+  <p class="eyebrow rise">Objectif de la séance</p>
+  <h2 class="rise" style="--i:1">À la fin de cette séance, vous serez capable de</h2>
+  <ol class="msgs rise" style="--i:2">
+    <li>Expliquer simplement comment un vaccin protège votre enfant.</li>
+    <li>Distinguer les idées reçues des faits.</li>
+    <li>Vérifier le carnet de vaccination et repérer les rappels à faire.</li>
+    <li>Savoir où rattraper un vaccin en retard : le centre de santé, gratuitement.</li>
+  </ol>
+</div></div>
+</section>
+
+<!-- 3 -->
+<section class="slide" data-name="Vote d'ouverture">
+<div class="inner"><div class="wrap">
+  <p class="eyebrow rise">Pour commencer</p>
+  <h2 class="rise" style="--i:1">Avez-vous déjà hésité à vacciner votre enfant ?</h2>
+  <div class="card rise" style="--i:2;max-width:900px" id="vote"></div>
+  <p class="small rise" style="--i:3;margin-top:.8em">Vote à main levée. Aucun nom n'est noté.</p>
+</div></div>
+</section>
+
+<!-- 4 -->
+<section class="slide" data-name="Comment agit un vaccin" data-on="vax">
+<div class="inner"><div class="wrap">
+  <p class="eyebrow rise">Comprendre</p>
+  <h2 class="rise" style="--i:1">Comment agit un vaccin ?</h2>
+  <div class="grid g2">
+    <div class="rise" style="--i:2">
+      <div class="stage"><canvas id="cvVax" aria-label="Des virus attaquent une cellule, avec ou sans anticorps"></canvas></div>
+      <div class="ctrl"><button class="btn" id="bSans" aria-pressed="true">Sans vaccin</button><button class="btn" id="bAvec" aria-pressed="false">Avec vaccin</button><span class="read" id="vaxStat" aria-live="polite"></span></div>
+      <div class="legend"><span><i style="background:var(--teal)"></i>Cellule</span><span><i style="background:var(--coral)"></i>Virus</span><span><i style="background:var(--ok)"></i>Anticorps</span></div>
+    </div>
+    <ol class="rise" style="--i:3;padding-left:1.2em;margin:0">
+      <li style="margin-bottom:.6em">Le vaccin montre au corps une version inoffensive du microbe.</li>
+      <li style="margin-bottom:.6em">Le corps apprend à le reconnaître et fabrique des anticorps.</li>
+      <li style="margin-bottom:.6em">Il garde une mémoire de ce microbe.</li>
+      <li style="margin-bottom:.6em">Si le vrai microbe arrive, les anticorps le neutralisent avant la maladie.</li>
+    </ol>
+  </div>
+</div></div>
+</section>
+
+<!-- 5 -->
+<section class="slide" data-name="Vrai ou faux" data-on="quiz">
+<div class="inner"><div class="wrap">
+  <p class="eyebrow rise">Idées reçues</p>
+  <h2 class="rise" style="--i:1">Vrai ou faux ?</h2>
+  <div class="card rise" style="--i:2">
+    <div class="q-count" id="qCount"></div>
+    <div class="q-text" id="qText"></div>
+    <div class="q-btns"><button class="btn" id="qTrue">Vrai</button><button class="btn" id="qFalse">Faux</button></div>
+    <div class="q-ex" id="qEx" hidden></div>
+    <div class="ctrl"><button class="btn pri" id="qNext" hidden>Question suivante</button><button class="btn" id="qRestart">Recommencer</button><span class="read" id="qScore"></span></div>
+    <div class="dots" id="qDots"></div>
+  </div>
+  <p class="small rise" style="--i:3;margin-top:.8em">Les parents votent à main levée, puis on touche la réponse de la majorité.</p>
+</div></div>
+</section>
+
+<!-- 6 -->
+<section class="slide" data-name="Le bouclier de la communauté" data-on="herd">
+<div class="inner"><div class="wrap">
+  <p class="eyebrow rise">Protéger tout le monde</p>
+  <h2 class="rise" style="--i:1">Le bouclier de la communauté</h2>
+  <div class="grid g2">
+    <div class="rise" style="--i:2">
+      <div class="stage"><div class="people" id="people" aria-label="288 personnes : vaccinées, non protégées ou malades"></div></div>
+      <div class="legend"><span><i style="background:var(--teal)"></i>Vaccinée</span><span><i style="background:var(--warn)"></i>Non protégée</span><span><i style="background:var(--coral)"></i>Malade</span></div>
+    </div>
+    <div class="rise" style="--i:3">
+      <p class="mute">Une personne malade arrive dans le groupe.</p>
+      <label for="cov" class="read" style="font-size:1.1em">Enfants vaccinés : <span id="covOut">60</span> %</label><br>
+      <input type="range" id="cov" min="0" max="100" value="60">
+      <div class="ctrl" style="margin-top:6px"><button class="btn" id="bRun">Relancer</button></div>
+      <span class="big" id="herdBig" style="margin-top:.5em"></span>
+      <p class="read" id="herdStat" aria-live="polite"></p>
+      <p class="small">Modèle simplifié. Pour la rougeole, il faut environ 95 % d'enfants vaccinés pour arrêter la maladie.</p>
+    </div>
+  </div>
+</div></div>
+</section>
+
+<!-- 7 -->
+<section class="slide" data-name="Le carnet de mon enfant">
+<div class="inner"><div class="wrap">
+  <p class="eyebrow rise">Vérifier le carnet</p>
+  <h2 class="rise" style="--i:1">Le carnet de mon enfant</h2>
+  <div class="form rise" style="--i:2">
+    <label for="ageV">Âge de l'enfant<input type="number" id="ageV" min="0" max="18" value="6" inputmode="numeric"></label>
+    <label for="ageU">Unité<select id="ageU"><option value="w">semaines</option><option value="m" selected>mois</option><option value="y">ans</option></select></label>
+  </div>
+  <p class="read" id="carnetSum" aria-live="polite"></p>
+  <ul class="ms" id="ms"></ul>
+  <ul class="gloss">
+    <li><b>BCG</b> : tuberculose</li><li><b>HB</b> : hépatite B</li><li><b>VPO</b> : polio, gouttes</li><li><b>VPI</b> : polio, injection</li>
+    <li><b>Penta</b> : diphtérie, tétanos, coqueluche, hépatite B, Hib</li><li><b>DTC</b> : diphtérie, tétanos, coqueluche</li>
+    <li><b>PCV</b> : pneumocoque</li><li><b>Rota</b> : rotavirus</li><li><b>RR</b> : rougeole et rubéole</li><li><b>HPV</b> : papillomavirus</li>
+  </ul>
+  <p class="small" style="margin-top:.8em">Calendrier national du PNI, à vérifier avec le carnet de l'enfant et l'infirmier. Une dose manquante se rattrape, on ne recommence jamais à zéro.</p>
+</div></div>
+</section>
+
+<!-- 8 -->
+<section class="slide" data-name="Au Maroc">
+<div class="inner"><div class="wrap">
+  <p class="eyebrow rise">Au Maroc</p>
+  <h2 class="rise" style="--i:1">Pourquoi c'est important</h2>
+  <div class="grid">
+    <div class="card t rise" style="--i:2"><span class="big">12</span>vaccins gratuits dans les centres de santé (PNI)</div>
+    <div class="card c rise" style="--i:3"><span class="big">184</span>décès de rougeole ; près de la moitié des cas étaient des enfants non vaccinés (OMS)</div>
+    <div class="card c rise" style="--i:4"><span class="big">30</span>cas confirmés de diphtérie et 3 décès au 30 octobre 2026 (ministère de la Santé)</div>
+    <div class="card t rise" style="--i:5"><span class="big">10 à 15 ans</span>âge des enfants les plus touchés par la diphtérie, souvent sans rappels</div>
+  </div>
+  <div class="alert rise" style="--i:6"><b>Le message :</b> ces maladies reviennent là où des doses manquent. Les rappels comptent : 18 mois, 5 ans, puis l'adolescence. Un carnet en retard se rattrape au centre de santé.</div>
+</div></div>
+</section>
+
+<!-- 9 -->
+<section class="slide" data-name="À retenir">
+<div class="inner"><div class="wrap">
+  <p class="eyebrow rise">À retenir</p>
+  <h2 class="rise" style="--i:1">Cinq messages pour les parents</h2>
+  <ol class="msgs rise" style="--i:2">
+    <li>Les vaccins du programme national sont gratuits dans les centres de santé.</li>
+    <li>Un vaccin en retard se rattrape. On ne recommence jamais à zéro.</li>
+    <li>Une fièvre légère ou une douleur à l'endroit de la piqûre est fréquente et passe en un à deux jours.</li>
+    <li>Les rappels comptent : rougeole et diphtérie reviennent quand des doses manquent.</li>
+    <li>Apportez le carnet de vaccination à chaque consultation.</li>
+  </ol>
+  <div class="alert rise" style="--i:3"><b>Consultez vite</b> en cas de difficulté à respirer, de gonflement du visage ou des lèvres, de malaise ou de convulsions après un vaccin. En cas de doute, demandez conseil à l'infirmier ou au médecin.</div>
+</div></div>
+</section>
+
+<!-- 10 -->
+<section class="slide" data-name="Engagement et merci">
+<div class="inner"><div class="wrap">
+  <p class="eyebrow rise">Pour finir</p>
+  <h2 class="rise" style="--i:1">Mon engagement cette semaine</h2>
+  <div class="grid g2">
+    <div class="rise" style="--i:2">
+      <ul style="padding-left:1.1em;margin:0 0 1em">
+        <li style="margin-bottom:.5em">Retrouver le carnet de vaccination de mon enfant.</li>
+        <li style="margin-bottom:.5em">Vérifier les rappels prévus et prendre rendez-vous.</li>
+        <li style="margin-bottom:.5em">Parler de ce que j'ai appris à un proche.</li>
+      </ul>
+      <p style="font-family:var(--f-d);font-weight:800;font-size:1.6em;color:var(--teal-ink)">Merci. Vos questions ?</p>
+    </div>
+    <div class="card t rise" style="--i:3">
+      <h3>Un mot pour vous, parents</h3>
+      <p>Vous êtes le premier protecteur de votre enfant. Poser des questions, vérifier un carnet, prendre un rendez-vous : chaque geste compte, et vous n'êtes pas seuls.</p>
+      <p style="margin:0"><b>Merci de votre confiance et de votre attention.</b></p>
+    </div>
+  </div>
+  <p class="small rise" style="--i:4;margin-top:1.2em;max-width:60em">Séance de Mouad El Khatyb, infirmier en santé de famille et santé communautaire. Sources : calendriers du PNI ; OMS, Measles – Morocco, 13 mai 2025 ; Le Matin, 22 avril 2024 ; ministère de la Santé via L'Information et Le360, octobre 2026. À valider avec la dernière version du PNI.</p>
+</div></div>
+</section>
+
+<div class="nav">
+  <button class="arrow" id="prev" aria-label="Diapositive précédente">←</button>
+  <div class="name" id="nm"></div>
+  <button class="arrow" id="fs" aria-label="Plein écran" title="Plein écran (touche F)">⛶</button>
+  <div class="count" id="ct"></div>
+  <button class="arrow" id="next" aria-label="Diapositive suivante">→</button>
+</div>
+</div>
+
+<script>
+(function(){
+  var RM=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var $=function(s,r){return (r||document).querySelector(s)},$$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var fmt=function(n){return new Intl.NumberFormat('fr-FR').format(n)};
+  var slides=$$('.slide'),cur=-1;
+
+  /* vote */
+  var VOTES=[['Oui, j\'ai déjà hésité',0],['Un peu, j\'ai des questions',0],['Non, je vaccine sans hésiter',0]],vbox=$('#vote');
+  function renderVote(){var tot=VOTES.reduce(function(a,v){return a+v[1]},0);vbox.innerHTML='';
+    VOTES.forEach(function(v,i){var r=document.createElement('div');r.className='vrow';var pct=tot?Math.round(v[1]/tot*100):0;
+      r.innerHTML='<span class="lab">'+v[0]+' <span class="mute">· '+v[1]+(tot?' ('+pct+' %)':'')+'</span></span><span><button class="btn" data-i="'+i+'" data-d="-1" aria-label="Retirer une main : '+v[0]+'">−</button> <button class="btn pri" data-i="'+i+'" data-d="1" aria-label="Ajouter une main : '+v[0]+'">+</button></span><div class="track"><i style="width:'+pct+'%"></i></div>';vbox.appendChild(r)})}
+  vbox.addEventListener('click',function(e){var b=e.target.closest('button[data-i]');if(!b)return;var i=+b.dataset.i;VOTES[i][1]=Math.max(0,VOTES[i][1]+(+b.dataset.d));renderVote()});renderVote();
+
+  /* scène vaccin */
+  var cv=$('#cvVax'),cx=cv.getContext('2d'),vW=0,vH=0,mode='sans',V=[],A=[],cell={},infected=0,neutral=0,spawnT=0,vaxRun=false;
+  function vaxSize(){var d=Math.min(window.devicePixelRatio||1,2);vW=cv.clientWidth;vH=cv.clientHeight;cv.width=vW*d;cv.height=vH*d;cx.setTransform(d,0,0,d,0,0)}
+  function vaxStat(){$('#vaxStat').textContent=mode==='sans'?'Cellule touchée : '+Math.min(100,infected*8)+' %':'Virus neutralisés : '+neutral}
+  function vaxInit(){vaxSize();cell={x:vW*.3,y:vH/2,r:Math.min(vH*.2,vW*.12)};V=[];A=[];infected=0;neutral=0;spawnT=0;
+    if(mode==='avec'){for(var i=0;i<26;i++)A.push({a:Math.random()*6.283,rr:cell.r*(1.5+Math.random()*1.5),s:(Math.random()*.012+.006)*(Math.random()<.5?-1:1),x:0,y:0})}vaxStat()}
+  function cssv(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+  function drawVirus(v,col){cx.save();cx.translate(v.x,v.y);cx.globalAlpha=v.dead?Math.max(0,v.al):1;var c=v.dead?'#7d8da6':col;cx.strokeStyle=c;cx.fillStyle=c;cx.lineWidth=2;
+    for(var i=0;i<10;i++){var a=i/10*6.283+v.rot;cx.beginPath();cx.moveTo(Math.cos(a)*9,Math.sin(a)*9);cx.lineTo(Math.cos(a)*15,Math.sin(a)*15);cx.stroke();cx.beginPath();cx.arc(Math.cos(a)*16,Math.sin(a)*16,2.4,0,6.283);cx.fill()}
+    cx.beginPath();cx.arc(0,0,9,0,6.283);cx.fill();cx.restore()}
+  function drawAb(a,col){cx.save();cx.translate(a.x,a.y);cx.rotate(a.a+1.57);cx.strokeStyle=col;cx.lineWidth=2.4;cx.lineCap='round';cx.beginPath();cx.moveTo(0,8);cx.lineTo(0,0);cx.lineTo(-6,-8);cx.moveTo(0,0);cx.lineTo(6,-8);cx.stroke();cx.restore()}
+  function vaxFrame(){
+    if(!vaxRun)return;var cT=cssv('--teal'),cV=cssv('--coral'),cA=cssv('--ok');
+    cx.clearRect(0,0,vW,vH);var k=Math.min(1,infected/12);
+    cx.strokeStyle=mode==='sans'&&k>0?cV:cT;cx.globalAlpha=1;cx.lineWidth=4;cx.fillStyle=mode==='sans'&&k>0?'rgba(217,80,58,'+(.1+.25*k)+')':'rgba(10,138,160,.1)';
+    cx.beginPath();cx.arc(cell.x,cell.y,cell.r,0,6.283);cx.fill();cx.stroke();cx.lineWidth=2;cx.beginPath();cx.arc(cell.x+cell.r*.1,cell.y-cell.r*.1,cell.r*.34,0,6.283);cx.stroke();
+    spawnT++;if(spawnT%(RM?90:44)===0&&V.length<16)V.push({x:vW+20,y:vH*.15+Math.random()*vH*.7,rot:0,dead:false,al:1,vx:0,vy:0});
+    A.forEach(function(a){a.a+=a.s;a.x=cell.x+Math.cos(a.a)*a.rr;a.y=cell.y+Math.sin(a.a)*a.rr;drawAb(a,cA)});
+    for(var i=V.length-1;i>=0;i--){var v=V[i];
+      if(v.dead){v.x+=v.vx;v.y+=v.vy;v.al-=.012;v.rot+=.02;if(v.al<=0){V.splice(i,1);continue}}
+      else{var dx=cell.x-v.x,dy=cell.y-v.y,d=Math.hypot(dx,dy),sp=RM?1:1.5;v.x+=dx/d*sp;v.y+=dy/d*sp;v.rot+=.03;
+        if(mode==='avec'){for(var j=0;j<A.length;j++){if(Math.hypot(A[j].x-v.x,A[j].y-v.y)<20){v.dead=true;v.vx=(Math.random()-.5)*.8;v.vy=(Math.random()-.5)*.8;neutral++;vaxStat();break}}}
+        if(!v.dead&&d<cell.r+6){infected++;V.splice(i,1);vaxStat();continue}}
+      drawVirus(v,cV)}
+    requestAnimationFrame(vaxFrame)}
+  function setMode(m){mode=m;$('#bSans').setAttribute('aria-pressed',m==='sans');$('#bAvec').setAttribute('aria-pressed',m==='avec');vaxInit()}
+  $('#bSans').onclick=function(){setMode('sans')};$('#bAvec').onclick=function(){setMode('avec')};
+
+  /* quiz */
+  var QS=[
+    {q:'Les vaccins du programme national sont gratuits dans les centres de santé.',a:true,e:'Vrai. Le PNI propose douze vaccins gratuits dans les centres de santé.'},
+    {q:'Les vaccins fatiguent ou surchargent le système immunitaire des bébés.',a:false,e:'Faux. Un bébé rencontre chaque jour un très grand nombre de microbes. Les vaccins en contiennent très peu et entraînent le système immunitaire sans le surcharger.'},
+    {q:'Un enfant en bonne santé n\'a pas besoin d\'être vacciné.',a:false,e:'Faux. Les maladies visées touchent aussi les enfants en bonne santé, et les plus petits sont les plus exposés aux formes graves.'},
+    {q:'Un rhume ou une petite fièvre oblige à reporter le vaccin.',a:false,e:'En général faux. Un rhume ou une fièvre légère n\'empêche pas de vacciner. En cas de maladie sérieuse ou de doute, demandez à l\'infirmier ou au médecin.'},
+    {q:'Une fièvre légère ou une douleur à l\'endroit de la piqûre après le vaccin est fréquente et passagère.',a:true,e:'Vrai. Cela passe en général en un à deux jours. Consultez vite si l\'enfant respire mal, a le visage gonflé, fait un malaise ou des convulsions.'},
+    {q:'Si mon enfant a raté des vaccins, il faut tout recommencer depuis le début.',a:false,e:'Faux. On compte les doses déjà reçues et on rattrape seulement les doses manquantes, en respectant les intervalles.'},
+    {q:'La rougeole et la diphtérie ont disparu : inutile de vacciner.',a:false,e:'Faux. La rougeole a fait plus de 25 000 cas suspects au Maroc et la diphtérie est revenue en 2026. Elles reviennent quand des doses manquent.'},
+    {q:'Les vaccins provoquent l\'autisme.',a:false,e:'Faux. De très nombreuses études dans de nombreux pays n\'ont trouvé aucun lien entre les vaccins et l\'autisme.'}
+  ];
+  var qi=0,res=[],answered=false;
+  function renderDots(){$('#qDots').innerHTML=QS.map(function(_,i){return '<i class="'+(res[i]===true?'ok':res[i]===false?'ko':'')+(i===qi?' cur':'')+'"></i>'}).join('')}
+  function score(){var ok=res.filter(function(r){return r===true}).length,n=res.filter(function(r){return r!==undefined}).length;$('#qScore').textContent=n?'Bonnes réponses : '+ok+' sur '+n:''}
+  function showQ(){answered=false;var q=QS[qi];$('#qCount').textContent='Question '+(qi+1)+' sur '+QS.length;$('#qText').textContent=q.q;
+    $('#qTrue').className='btn';$('#qFalse').className='btn';$('#qTrue').disabled=false;$('#qFalse').disabled=false;$('#qEx').hidden=true;$('#qNext').hidden=true;renderDots();score()}
+  function answer(v){if(answered)return;answered=true;var q=QS[qi],good=(v===q.a);res[qi]=good;$('#qTrue').disabled=true;$('#qFalse').disabled=true;
+    $(q.a?'#qTrue':'#qFalse').classList.add('right');if(!good)$(v?'#qTrue':'#qFalse').classList.add('wrong');
+    var ex=$('#qEx');ex.hidden=false;ex.innerHTML='<strong>'+(good?'Bonne réponse. ':'Pas tout à fait. ')+'</strong>'+q.e;
+    var nx=$('#qNext');nx.hidden=false;nx.textContent=qi<QS.length-1?'Question suivante':'Voir le résultat';renderDots();score()}
+  $('#qTrue').onclick=function(){answer(true)};$('#qFalse').onclick=function(){answer(false)};
+  $('#qNext').onclick=function(){if(qi<QS.length-1){qi++;showQ()}else{var ok=res.filter(function(r){return r===true}).length;$('#qCount').textContent='Quiz terminé';$('#qText').textContent=ok+' bonnes réponses sur '+QS.length+'.';
+    $('#qEx').hidden=false;$('#qEx').innerHTML='Quelle idée vous a le plus surpris ?';$('#qNext').hidden=true;$('#qTrue').disabled=true;$('#qFalse').disabled=true}};
+  $('#qRestart').onclick=function(){qi=0;res=[];showQ()};showQ();
+
+  /* bouclier */
+  var COLS=24,ROWS=12,N=COLS*ROWS,people=$('#people'),dots=[],rv=[],timers=[];
+  function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;var t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+  (function(){var r=rng(2026);for(var i=0;i<N;i++){rv.push(r());var d=document.createElement('div');d.className='p';people.appendChild(d);dots.push(d)}})();
+  function herd(){timers.forEach(clearTimeout);timers=[];var cov=parseInt($('#cov').value,10)/100;$('#covOut').textContent=Math.round(cov*100);
+    var seed=Math.floor(N/2)+Math.floor(COLS/2),vac=[];for(var i=0;i<N;i++){vac[i]=(i!==seed&&rv[i]<cov);dots[i].className='p'+(vac[i]?' vac':'')}
+    var r=rng(77),inf={},gen=[seed],gens=[[seed]];inf[seed]=1;
+    while(gen.length&&gens.length<30){var nxt=[];gen.forEach(function(){for(var k=0;k<12;k++){var t=Math.floor(r()*N);if(!vac[t]&&!inf[t]){inf[t]=1;nxt.push(t)}}});if(nxt.length)gens.push(nxt);gen=nxt}
+    var total=Object.keys(inf).length;$('#herdStat').textContent='';$('#herdBig').textContent='';
+    gens.forEach(function(g,gi){timers.push(setTimeout(function(){g.forEach(function(i){dots[i].classList.add('inf')});
+      if(gi===gens.length-1){$('#herdBig').textContent=fmt(total)+' malade'+(total>1?'s':'');$('#herdStat').textContent=total<=3?'La maladie s\'arrête : la communauté est protégée.':'Sur '+N+' personnes, '+Math.round(total/N*100)+' % sont tombées malades.'}},RM?0:gi*420))})}
+  $('#cov').addEventListener('input',herd);$('#bRun').onclick=herd;
+
+  /* carnet */
+  var MS=[{w:0,l:'Naissance à 4 semaines',v:['HB','BCG','VPO0']},{w:8,l:'8 semaines',v:['VPO1','Penta1','Rota1']},{w:10,l:'10 semaines',v:['PCV1']},{w:12,l:'12 semaines',v:['VPO2','Penta2','Rota2']},{w:16,l:'16 semaines',v:['VPO3','Penta3','Rota3','VPI']},{w:18,l:'18 semaines',v:['PCV2']},{w:26,l:'6 mois',v:['PCV3']},{w:39,l:'9 mois',v:['RR1 (rougeole)']},{w:52,l:'12 mois',v:['PCV4']},{w:78,l:'18 mois',v:['VPO4','RR2','DTC1 (rappel)']},{w:260,l:'5 ans',v:['VPO5','DTC2 (rappel)']},{w:573,l:'11 ans',v:['HPV (2 doses)']}];
+  function carnet(){var v=Math.max(0,parseFloat($('#ageV').value)||0),u=$('#ageU').value,wk=u==='w'?v:u==='m'?v*4.345:v*52.18,nextI=-1;
+    MS.forEach(function(m,i){if(m.w>wk&&nextI<0)nextI=i});var done=MS.filter(function(m){return m.w<=wk}).length;
+    $('#carnetSum').textContent='À cet âge, '+done+' rendez-vous du calendrier sont déjà passés'+(nextI>=0?'. Prochain : '+MS[nextI].l+'.':'. Le calendrier de base est terminé.');
+    $('#ms').innerHTML=MS.map(function(m,i){var cls=m.w<=wk?'past':i===nextI?'next':'fut',st=m.w<=wk?'Prévu à cet âge : à vérifier dans le carnet':i===nextI?'Prochain rendez-vous':'Plus tard';
+      return '<li class="'+cls+'"><span class="age">'+m.l+'</span><span class="vacs">'+m.v.map(function(x){return '<span class="vtag">'+x+'</span>'}).join('')+'</span><span class="st">'+st+'</span></li>'}).join('')}
+  $('#ageV').addEventListener('input',carnet);$('#ageU').addEventListener('change',carnet);carnet();
+
+  /* plein écran */
+  var fsBtn=$('#fs');function isFs(){return !!(document.fullscreenElement||document.webkitFullscreenElement)}
+  function toggleFs(){try{var r;if(isFs()){r=(document.exitFullscreen||document.webkitExitFullscreen).call(document)}else{var el=document.documentElement;r=(el.requestFullscreen||el.webkitRequestFullscreen).call(el)}if(r&&r.catch)r.catch(function(){fsBtn.title='Plein écran indisponible ici'})}catch(e){fsBtn.title='Plein écran indisponible ici'}}
+  if(!(document.fullscreenEnabled||document.webkitFullscreenEnabled))fsBtn.hidden=true;
+  fsBtn.onclick=toggleFs;
+  ['fullscreenchange','webkitfullscreenchange'].forEach(function(ev){document.addEventListener(ev,function(){fsBtn.textContent=isFs()?'✕':'⛶';fsBtn.setAttribute('aria-label',isFs()?'Quitter le plein écran':'Plein écran');setTimeout(function(){if(vaxRun)vaxInit()},150)})});
+
+  /* navigation */
+  function go(i,silent){i=Math.max(0,Math.min(slides.length-1,i));if(i===cur)return;vaxRun=false;timers.forEach(clearTimeout);cur=i;
+    slides.forEach(function(s,k){s.classList.toggle('active',k===i);s.setAttribute('aria-hidden',k!==i)});
+    var sl=slides[i];sl.scrollTop=0;$('#prog').style.width=((i+1)/slides.length*100)+'%';
+    $('#ct').innerHTML='<b>'+(i+1)+'</b> / '+slides.length;$('#nm').textContent=sl.dataset.name||'';$('#prev').disabled=i===0;$('#next').disabled=i===slides.length-1;
+    var on=sl.dataset.on;if(on==='vax'){setMode('sans');vaxRun=true;requestAnimationFrame(vaxFrame)}if(on==='herd')herd();
+    if(!silent){try{history.replaceState(null,'','#diapo-'+(i+1))}catch(e){location.hash='diapo-'+(i+1)}}}
+  $('#prev').onclick=function(){go(cur-1)};$('#next').onclick=function(){go(cur+1)};
+  document.addEventListener('keydown',function(e){var tg=(e.target&&e.target.tagName)||'';if(/INPUT|TEXTAREA|SELECT/.test(tg))return;
+    if(['ArrowRight','PageDown'].indexOf(e.key)>-1){e.preventDefault();go(cur+1)}else if(['ArrowLeft','PageUp'].indexOf(e.key)>-1){e.preventDefault();go(cur-1)}
+    else if(e.key==='Home')go(0);else if(e.key==='End')go(slides.length-1);else if((e.key==='f'||e.key==='F')&&!e.ctrlKey&&!e.metaKey&&!e.altKey)toggleFs()});
+  var sx=null,sy=null;
+  $('#deck').addEventListener('touchstart',function(e){if(e.target.closest('input,select,canvas'))return;sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});
+  $('#deck').addEventListener('touchend',function(e){if(sx===null)return;var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;sx=null;if(Math.abs(dx)>60&&Math.abs(dx)>Math.abs(dy)*1.5)go(cur+(dx<0?1:-1))},{passive:true});
+  window.addEventListener('resize',function(){if(vaxRun)vaxInit()});
+  window.addEventListener('hashchange',function(){var m=/^#diapo-(\d+)$/.exec(location.hash);if(m)go(parseInt(m[1],10)-1,true)});
+  var m=/^#diapo-(\d+)$/.exec(location.hash);go(m?parseInt(m[1],10)-1:0,true);
+})();
+</script>
+
+</body></html>
